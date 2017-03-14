@@ -12,7 +12,7 @@ class splunk::params
   $forcetimebasedautolb = hiera('splunk::params::forcetimebasedautolb', true)
   # ssl
   $sslv3                = hiera('splunk::params::sslv3', false)
-  $sslversions          = hiera('splunk::params::sslversions', 'tls')
+  $sslversions          = hiera('splunk::params::sslversions', 'tls1.1')
   $sslverify            = hiera('splunk::params::sslverify', false)
   $sslclientcert        = hiera('splunk::params::sslclientcert', false)
   $sslclientcompression = hiera('splunk::params::sslclientcompression', false)
