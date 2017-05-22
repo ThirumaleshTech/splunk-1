@@ -5,11 +5,21 @@ class splunk::install($type=$type)
   $new_version     = $::splunk::version
   $splunkos        = $::splunk::splunkos
   $splunkarch      = $::splunk::splunkarch
+  $splunkhome      = $::splunk::splunkhome
   $my_perms        = "${::splunk::splunk_user}:${::splunk::splunk_group}"
   $cacertpath      = $::splunk::params::cacertpath
   $privkeypath     = $::splunk::params::privkeypath
   $servercertpath  = $::splunk::params::servercertpath
   $webcertpath     = $::splunk::params::webcertpath
+
+  if $type != 'forwarder' {
+    file { $splunkhome:
+      ensure => directory,
+      owner  => $::splunk::splunk_user,
+      group  => $::splunk::splunk_group,
+      mode   => '0750'
+    }
+  }
 
   # begin version change
   if $new_version != $current_version {
