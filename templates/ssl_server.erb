@@ -17,6 +17,7 @@ allowSslRenegotiation = <%= sslnegotiation %>
 allowSslCompression = <%= sslcompression %>
 caCertFile = <%= cacertpath %>
 cipherSuite = <%= ciphersuite %>
+enableSplunkdSSL = true
 requireClientCert = <%= sslclientcert %>
 sendStrictTransportSecurityHeader = <%= sslstsheader %>
 sslKeysfile = <%= servercertpath %>
@@ -25,3 +26,4 @@ sslVerifyServerCert = <%= sslverify %>
 sslVersions = <%= sslversions %>
 useClientSSLCompression = <%= sslclientcompression %>
 useSplunkdClientSSLCompression = <%= sslclientcompression %>
+certCreateScript = $SPLUNK_HOME/bin/splunk, createssl, server-cert, 2048

@@ -41,18 +41,23 @@ class splunk::install($type=$type)
       notify => Exec['unpackSplunk']
     }
 
+    $stopcmd = 'splunk stop'
+    $startcmd = 'splunk start --accept-license --answer-yes --no-prompt'
+
     exec { 'unpackSplunk':
-      command   => "${::splunk::params::tarcmd} ${::splunk::splunksource}; chown -RL ${my_perms} ${::splunk::splunkhome}; chmod 400 ${::splunk::splunkhome}/var/lib/splunk/kvstore/mongo/splunk.key",
+      command   => "${::splunk::params::tarcmd} ${::splunk::splunksource}",
       path      => "${::splunk::splunkhome}/bin:/bin:/usr/bin:",
       cwd       => $::splunk::install_path,
       subscribe => File["${::splunk::install_path}/${::splunk::splunksource}"],
       timeout   => 600,
       unless    => "test -e ${::splunk::splunkhome}/${::splunk::manifest}",
-      creates   => "${::splunk::splunkhome}/${::splunk::manifest}"
+      creates   => "${::splunk::splunkhome}/${::splunk::manifest}",
+      user      => $::splunk::splunk_user,
+      group     => $::splunk::splunk_group
     }
 
     exec { 'firstStart':
-      command     => 'splunk stop; splunk start --accept-license --answer-yes --no-prompt',
+      command     => "${stopcmd}; ${startcmd}",
       path        => "${::splunk::splunkhome}/bin:/bin:/usr/bin:",
       subscribe   => Exec['unpackSplunk'],
       refreshonly => true,
