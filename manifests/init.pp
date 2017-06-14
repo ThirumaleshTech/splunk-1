@@ -38,6 +38,7 @@ class splunk($type='forwarder') {
   include splunk::params
 
   $version         = $::splunk::params::version
+  $release         = $::splunk::params::release
   $splunk_user     = $::splunk::params::splunk_user
   $splunk_group    = $::splunk::params::splunk_group
   $install_path    = $::splunk::params::install_path
@@ -48,6 +49,12 @@ class splunk($type='forwarder') {
   $splunkext       = $::splunk::params::splunkext
   $tar             = $::splunk::params::tar
   $tarcmd          = $::splunk::params::tarcmd
+
+  if $release != undef {
+    $new_version = "${version}-${release}"
+  } else {
+    $new_version = $version
+  }
 
   if $type == 'forwarder' {
     $sourcepart = 'splunkforwarder'

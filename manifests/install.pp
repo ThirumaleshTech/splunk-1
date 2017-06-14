@@ -2,7 +2,8 @@ class splunk::install($type=$type)
 {
   $sourcepart      = $::splunk::sourcepart
   $current_version = $::splunk::current_version
-  $new_version     = $::splunk::version
+  $new_version     = $::splunk::new_version
+  $release         = $::splunk::params::release
   $splunkos        = $::splunk::splunkos
   $splunkarch      = $::splunk::splunkarch
   $splunkhome      = $::splunk::splunkhome
